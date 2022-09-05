@@ -1,14 +1,12 @@
-import { Transacao } from './../../models/transacao/transacao.model';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  MAT_FORM_FIELD,
-  MatFormField,
-  MatFormFieldControl,
-} from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { TransacaoService } from 'src/app/models/transacao/transacao.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { DeleteTransacaoComponent } from '../delete-transacao/delete-transacao.component';
+import { FormTransacaoComponent } from '../form-transacao/form-transacao.component';
+import { Transacao } from './../../models/transacao/transacao.model';
 
 export interface PeriodicElement {
   name: string;
@@ -36,7 +34,8 @@ export class PaginaPrincipalComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private transacaoService: TransacaoService
+    private transacaoService: TransacaoService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -53,6 +52,24 @@ export class PaginaPrincipalComponent implements OnInit {
       complete() {
         console.log('requisição completa');
       },
+    });
+  }
+  onAdd() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {};
+
+    const dialogRef = this.dialog.open(FormTransacaoComponent, dialogConfig);
+
+    dialogRef
+      .afterClosed()
+      .subscribe((data) => this.transacaoService.insert(data).subscribe());
+  }
+  onDelete() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {};
+    const dialogRef = this.dialog.open(DeleteTransacaoComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((data:any) => {
+      this.transacaoService.delete(data).subscribe((v)=>console.log(data));
     });
   }
 

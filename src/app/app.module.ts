@@ -21,6 +21,8 @@ import { FormProdutoComponent } from './components/form-produto/form-produto.com
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { DeleteProdutoComponent } from './components/delete-produto/delete-produto.component';
+import { DeleteTransacaoComponent } from './components/delete-transacao/delete-transacao.component';
+import { FormTransacaoComponent } from './components/form-transacao/form-transacao.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { DeleteProdutoComponent } from './components/delete-produto/delete-produ
     Pagina2Component,
     FormProdutoComponent,
     DeleteProdutoComponent,
+    DeleteTransacaoComponent,
+    FormTransacaoComponent,
   ],
   imports: [
     BrowserModule,

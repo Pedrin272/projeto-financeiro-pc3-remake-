@@ -1,0 +1,23 @@
+<h1 matDialogTitle>Title</h1>
+
+<mat-dialog-content>
+  <mat-card [formGroup]="form">
+    <mat-card-content>
+      <mat-form-field appearance="legacy">
+        <mat-label>Id</mat-label>
+        <input
+          matInput
+          formControlName="id"
+          type="number"
+          required
+          placeholder="Id"
+        />
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button matDialogClose (click)=" close()">Close dialog</button>
+  <button mat-button (click)="save()">Action</button>
+</mat-dialog-actions>

@@ -18,8 +18,16 @@
     </button>
   </div>
   <div class="d-flex flex-row">
-    <button type="button" class="btn btn-primary flex-end">Novo!</button>
-    <button type="button" class="btn btn-danger flex-end">Delete</button>
+    <button
+      type="button"
+      class="btn btn-primary flex-end"
+      (click)="onAdd()"
+    >
+      Novo!
+    </button>
+    <button type="button" class="btn btn-danger flex-end" (click)="onDelete()">
+      Delete
+    </button>
   </div>
   <div [formGroup]="form">
 
