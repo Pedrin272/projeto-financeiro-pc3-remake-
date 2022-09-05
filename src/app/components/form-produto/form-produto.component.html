@@ -1,0 +1,30 @@
+<h1 matDialogTitle>Cadastrar Produto</h1>
+
+<mat-dialog-content>
+  <div [formGroup]="form">
+    <mat-card>
+      <mat-card-content>
+        <mat-form-field appearance="legacy">
+          <mat-label>Id</mat-label>
+          <input matInput="Id" />
+        </mat-form-field>
+        <mat-form-field appearance="legacy">
+          <mat-label>nome</mat-label>
+          <input matInput="nome" />
+        </mat-form-field>
+        <mat-form-field appearance="legacy">
+          <mat-label>Valor</mat-label>
+          <input matInput="valorVenda" />
+        </mat-form-field>
+        <mat-form-field appearance="legacy">
+          <mat-label>Estoque</mat-label>
+          <input matInput="estoque" />
+        </mat-form-field>
+      </mat-card-content>
+      <mat-dialog-actions>
+        <button mat-button matDialogClose (click)="close()">Close dialog</button>
+        <button mat-button (click)="save()"> Salvar!!</button>
+      </mat-dialog-actions>
+    </mat-card>
+  </div>
+</mat-dialog-content>

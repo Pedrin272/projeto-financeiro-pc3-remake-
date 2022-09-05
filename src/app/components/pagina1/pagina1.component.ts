@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Products } from 'src/app/models/produto.service';
 import { ProdutosService } from 'src/app/models/produtos.service';
+import { FormProdutoComponent } from '../form-produto/form-produto.component';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -23,8 +24,8 @@ export class Pagina1Component implements OnInit {
   dataSource: any;
 
   form: FormGroup = new FormGroup({
-    id: new FormControl("" ),
-    nome: new FormControl(""),
+    id: new FormControl(''),
+    nome: new FormControl(''),
     valorVenda: new FormControl(0),
     estoque: new FormControl(0),
   });
@@ -51,7 +52,9 @@ export class Pagina1Component implements OnInit {
     });
   }
   onAdd() {
-    this.router.navigateByUrl('/pagina1/produto-form');
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {};
+    this.dialog.open(FormProdutoComponent, dialogConfig);
   }
   onDelete() {}
 
