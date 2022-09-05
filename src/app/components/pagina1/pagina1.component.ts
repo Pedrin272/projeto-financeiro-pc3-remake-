@@ -51,6 +51,7 @@ export class Pagina1Component implements OnInit {
     dialogRef
       .afterClosed()
       .subscribe((data) => this.productsService.insert(data).subscribe());
+      this.buscaProdutos();
   }
   onDelete() {
     const dialogConfig = new MatDialogConfig();

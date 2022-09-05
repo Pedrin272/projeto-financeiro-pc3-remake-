@@ -22,7 +22,7 @@ export interface PeriodicElement {
 export class PaginaPrincipalComponent implements OnInit {
   transacoes: Transacao[] = [];
   form: FormGroup = new FormGroup({
-    id: new FormControl(0 ),
+    id: new FormControl(0),
     createdAt: new FormControl(''),
     tipo: new FormControl(''),
     valor: new FormControl(0),
@@ -39,6 +39,40 @@ export class PaginaPrincipalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.buscaProdutos();
+  }
+  onAdd() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {};
+
+    const dialogRef = this.dialog.open(FormTransacaoComponent, dialogConfig);
+
+    dialogRef
+      .afterClosed()
+      .subscribe((data) => this.transacaoService.insert(data).subscribe());
+      this.buscaProdutos();
+  }
+  onDelete() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {};
+    const dialogRef = this.dialog.open(DeleteTransacaoComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((data: any) => {
+      this.transacaoService.delete(data.id).subscribe((v) => {
+        console.log(data);
+        this.buscaProdutos();
+      });
+    });
+  }
+
+  navegarPara(rota: any[]) {
+    this.router.navigate(rota);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  buscaProdutos() {
     let that = this;
 
     this.transacaoService.selectAll().subscribe({
@@ -53,32 +87,5 @@ export class PaginaPrincipalComponent implements OnInit {
         console.log('requisição completa');
       },
     });
-  }
-  onAdd() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {};
-
-    const dialogRef = this.dialog.open(FormTransacaoComponent, dialogConfig);
-
-    dialogRef
-      .afterClosed()
-      .subscribe((data) => this.transacaoService.insert(data).subscribe());
-  }
-  onDelete() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {};
-    const dialogRef = this.dialog.open(DeleteTransacaoComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe((data:any) => {
-      this.transacaoService.delete(data).subscribe((v)=>console.log(data));
-    });
-  }
-
-  navegarPara(rota: any[]) {
-    this.router.navigate(rota);
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
