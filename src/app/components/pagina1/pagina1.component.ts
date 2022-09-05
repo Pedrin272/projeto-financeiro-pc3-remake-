@@ -7,6 +7,7 @@ import { Products } from 'src/app/models/produto.service';
 import { ProdutosService } from 'src/app/models/produtos.service';
 import { FormProdutoComponent } from '../form-produto/form-produto.component';
 import { DeleteProdutoComponent } from '../delete-produto/delete-produto.component';
+
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -37,6 +38,45 @@ export class Pagina1Component implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.buscaProdutos();
+  }
+  onAdd() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '800px';
+    dialogConfig.height = '800px';
+    dialogConfig.data = {};
+
+    const dialogRef = this.dialog.open(FormProdutoComponent, dialogConfig);
+
+    dialogRef
+      .afterClosed()
+      .subscribe((data) => this.productsService.insert(data).subscribe());
+  }
+  onDelete() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '400px';
+    dialogConfig.height = '400px';
+    dialogConfig.data = {};
+    const dialogRef = this.dialog.open(DeleteProdutoComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        this.productsService.delete(data.id).subscribe((v) => {
+          console.log(data);
+          this.buscaProdutos();
+        });
+      }
+      // {console.log(data)}
+    );
+  }
+
+  navegarPara(rota: any[]) {
+    this.router.navigate(rota);
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  buscaProdutos() {
     let that = this;
 
     this.productsService.selectAll().subscribe({
@@ -51,31 +91,5 @@ export class Pagina1Component implements OnInit {
         console.log('requisição completa');
       },
     });
-  }
-  onAdd() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {};
-
-    const dialogRef = this.dialog.open(FormProdutoComponent, dialogConfig);
-
-    dialogRef
-      .afterClosed()
-      .subscribe((data) => this.productsService.insert(data).subscribe());
-  }
-  onDelete() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {};
-    const dialogRef = this.dialog.open(DeleteProdutoComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe((data:string) => {
-      this.productsService.delete(data).subscribe((v)=>console.log(data));
-    });
-  }
-
-  navegarPara(rota: any[]) {
-    this.router.navigate(rota);
-  }
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
