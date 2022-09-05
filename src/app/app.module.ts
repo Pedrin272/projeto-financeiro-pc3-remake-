@@ -18,6 +18,9 @@ import { PaginaPrincipalComponent } from './components/pagina-principal/pagina-p
 import { Pagina1Component } from './components/pagina1/pagina1.component';
 import { Pagina2Component } from './components/pagina2/pagina2.component';
 import { FormProdutoComponent } from './components/form-produto/form-produto.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { DeleteProdutoComponent } from './components/delete-produto/delete-produto.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +29,13 @@ import { FormProdutoComponent } from './components/form-produto/form-produto.com
     Pagina1Component,
     Pagina2Component,
     FormProdutoComponent,
+    DeleteProdutoComponent,
   ],
   imports: [
     BrowserModule,
+    MatDatepickerModule,
     BrowserAnimationsModule,
+    MatSelectModule,
     MatTableModule,
     AppRoutingModule,
     MatCardModule,

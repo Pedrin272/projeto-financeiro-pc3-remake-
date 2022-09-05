@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Products } from 'src/app/models/produto.service';
 import { ProdutosService } from 'src/app/models/produtos.service';
 import { FormProdutoComponent } from '../form-produto/form-produto.component';
+import { DeleteProdutoComponent } from '../delete-produto/delete-produto.component';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -54,9 +55,21 @@ export class Pagina1Component implements OnInit {
   onAdd() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {};
-    this.dialog.open(FormProdutoComponent, dialogConfig);
+
+    const dialogRef = this.dialog.open(FormProdutoComponent, dialogConfig);
+
+    dialogRef
+      .afterClosed()
+      .subscribe((data) => this.productsService.insert(data).subscribe());
   }
-  onDelete() {}
+  onDelete() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {};
+    const dialogRef = this.dialog.open(DeleteProdutoComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((data:string) => {
+      this.productsService.delete(data).subscribe((v)=>console.log(data));
+    });
+  }
 
   navegarPara(rota: any[]) {
     this.router.navigate(rota);

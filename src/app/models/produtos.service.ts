@@ -37,7 +37,7 @@ export class ProdutosService {
       return this.insert(transacao);
     }
   }
-  delete(id: number) {
+  delete(id: string) {
     return this.httpClient.delete<Products>(PRODUCTS + '/' + id);
   }
 }
