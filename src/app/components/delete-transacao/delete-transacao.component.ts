@@ -30,7 +30,7 @@ export class DeleteTransacaoComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      id: [''],
+      id: [0],
     });
   }
   save() {
@@ -39,16 +39,16 @@ export class DeleteTransacaoComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
-  onConfirm(confirm: boolean) {
+  onConfirm() {
     console.log('confirmado');
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '400px';
     dialogConfig.height = '400px';
     dialogConfig.data = {};
     const dialogRef = this.dialog.open(ConfirmacaoComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe((confirm: boolean) => {
-      console.log(confirm);
-      if (confirm === true) {
+    dialogRef.afterClosed().subscribe((data: boolean) => {
+      console.log(data);
+      if (data === true) {
         this.save();
       } else {
         this.close();

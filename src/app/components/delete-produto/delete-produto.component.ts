@@ -38,7 +38,7 @@ export class DeleteProdutoComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
-  onConfirm(confirm: boolean) {
+  onConfirm() {
     console.log('confirmado');
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '400px';
