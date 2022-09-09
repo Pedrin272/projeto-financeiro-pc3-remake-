@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "projeto-financeiro-b9018": {
+      "hosting": {
+        "projeto-financeiro-pc3": [
+          "projeto-financeiro-b9018"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "projeto-financeiro-b9018"
+  }
+}

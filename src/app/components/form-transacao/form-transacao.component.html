@@ -4,24 +4,17 @@
   <div [formGroup]="form">
     <mat-card>
       <mat-card-content>
+        <mat-form-field appearance="legacy">
+          <mat-label>valor</mat-label>
 
-        <mat-form-field appearance="legacy">valor
-          <input
-            matInput
-            formControlName="valor"
-            type="number"
-            required
-          />
+          <input matInput formControlName="valor" type="number" required />
         </mat-form-field>
-        <mat-form-field appearance="legacy">saldo
-          <input
-            matInput
-            formControlName="saldo"
-            type="number"
-            required
-          />
+        <mat-form-field appearance="legacy">
+          <mat-label>Saldo</mat-label>
+          <input matInput formControlName="saldo" type="number" required />
         </mat-form-field>
-        <mat-form-field appearance="legacy">Data Transação
+        <mat-form-field appearance="legacy"
+          ><mat-label>Data Transação</mat-label>
           <input
             matInput
             formControlName="createdAt"
@@ -29,13 +22,12 @@
             required
           />
         </mat-form-field>
-        <mat-form-field appearance="legacy">tipo
-          <input
-            matInput
-            formControlName="tipo"
-            type="text"
-            required
-          />
+        <mat-form-field appearance="legacy">
+          <mat-label>Tipo</mat-label>
+          <mat-select formControlName="tipo">
+            <mat-option value="Entrada">Entrada</mat-option>
+            <mat-option value="Saida">Saida</mat-option>
+          </mat-select>
         </mat-form-field>
       </mat-card-content>
       <mat-dialog-actions>

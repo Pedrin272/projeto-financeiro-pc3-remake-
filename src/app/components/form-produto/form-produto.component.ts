@@ -8,6 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./form-produto.component.scss'],
 })
 export class FormProdutoComponent implements OnInit {
+  
   description: string;
   form: FormGroup = new FormGroup({
     id: new FormControl(0),

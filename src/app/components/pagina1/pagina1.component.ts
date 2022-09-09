@@ -5,8 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Products } from 'src/app/models/produto.service';
 import { ProdutosService } from 'src/app/models/produtos.service';
-import { FormProdutoComponent } from '../form-produto/form-produto.component';
 import { DeleteProdutoComponent } from '../delete-produto/delete-produto.component';
+import { FormProdutoComponent } from '../form-produto/form-produto.component';
 
 export interface PeriodicElement {
   name: string;
@@ -43,15 +43,14 @@ export class Pagina1Component implements OnInit {
   onAdd() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '800px';
-    dialogConfig.height = '800px';
+    dialogConfig.height = '400px';
     dialogConfig.data = {};
 
     const dialogRef = this.dialog.open(FormProdutoComponent, dialogConfig);
 
-    dialogRef
-      .afterClosed()
-      .subscribe((data) => this.productsService.insert(data).subscribe());
-      this.buscaProdutos();
+    dialogRef.afterClosed().subscribe((data) => {
+      this.productsService.isertOrUpdate(data).subscribe((v) => {this.buscaProdutos();});
+    });
   }
   onDelete() {
     const dialogConfig = new MatDialogConfig();
@@ -59,15 +58,17 @@ export class Pagina1Component implements OnInit {
     dialogConfig.height = '400px';
     dialogConfig.data = {};
     const dialogRef = this.dialog.open(DeleteProdutoComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(
-      (data) => {
+    dialogRef.afterClosed().subscribe((data) => {
+      if(data && data.id){
         this.productsService.delete(data.id).subscribe((v) => {
           console.log(data);
           this.buscaProdutos();
         });
+      }else{
+        console.log("No Id");
       }
-      // {console.log(data)}
-    );
+
+    });
   }
 
   navegarPara(rota: any[]) {

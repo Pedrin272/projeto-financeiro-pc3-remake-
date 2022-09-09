@@ -47,20 +47,25 @@ export class PaginaPrincipalComponent implements OnInit {
 
     const dialogRef = this.dialog.open(FormTransacaoComponent, dialogConfig);
 
-    dialogRef
-      .afterClosed()
-      .subscribe((data) => this.transacaoService.insert(data).subscribe());
-      this.buscaProdutos();
+    dialogRef.afterClosed().subscribe((data) => {
+      this.transacaoService.isertOrUpdate(data).subscribe((v) => {
+        this.buscaProdutos();
+      });
+    });
   }
   onDelete() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {};
     const dialogRef = this.dialog.open(DeleteTransacaoComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((data: any) => {
-      this.transacaoService.delete(data.id).subscribe((v) => {
-        console.log(data);
-        this.buscaProdutos();
-      });
+      if (data && data.id) {
+        this.transacaoService.delete(data.id).subscribe((v) => {
+          console.log(data);
+          this.buscaProdutos();
+        });
+      } else {
+        console.log('não deletou');
+      }
     });
   }
 

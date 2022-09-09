@@ -26,8 +26,8 @@
   </div>
 
   <mat-card class="bg-dark">
-      <div [formGroup]="form">
-      <mat-form-field appearance="standard" class="bg-light">
+      <div [formGroup]="form" >
+      <mat-form-field appearance="standard">
         <mat-label>Filter</mat-label>
         <input
         matInput
@@ -38,7 +38,7 @@
       </mat-form-field>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 bg-white">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 " >
       <!-- Id Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>Id</th>

@@ -102,6 +102,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "projeto-financeiro-pc3:build:production",
+            "firebaseProject": "projeto-financeiro-b9018",
+            "firebaseHostingSite": "projeto-financeiro-b9018"
+          }
         }
       }
     }

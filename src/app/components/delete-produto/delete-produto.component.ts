@@ -1,6 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { ConfirmacaoComponent } from 'src/app/shared/confirmacao/confirmacao.component';
 
 @Component({
   selector: 'app-delete-produto',
@@ -15,6 +21,7 @@ export class DeleteProdutoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<DeleteProdutoComponent>,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
     this.description = data.description;
@@ -30,5 +37,21 @@ export class DeleteProdutoComponent implements OnInit {
   }
   close() {
     this.dialogRef.close();
+  }
+  onConfirm(confirm: boolean) {
+    console.log('confirmado');
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '400px';
+    dialogConfig.height = '400px';
+    dialogConfig.data = {};
+    const dialogRef = this.dialog.open(ConfirmacaoComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((data: boolean) => {
+      console.log(data);
+      if (data === true) {
+        this.save();
+      } else {
+        this.close();
+      }
+    });
   }
 }
