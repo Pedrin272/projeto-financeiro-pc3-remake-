@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TransacaoService } from 'src/app/models/transacao/transacao.service';
@@ -31,6 +32,8 @@ export class PaginaPrincipalComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'createdAt', 'tipo', 'valor', 'saldo'];
   dataSource: any;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private router: Router,
@@ -68,6 +71,7 @@ export class PaginaPrincipalComponent implements OnInit {
       }
     });
   }
+  valor() {}
 
   navegarPara(rota: any[]) {
     this.router.navigate(rota);
@@ -81,9 +85,10 @@ export class PaginaPrincipalComponent implements OnInit {
     let that = this;
 
     this.transacaoService.selectAll().subscribe({
-      next(transacoes) {
-        console.log(transacoes);
-        that.dataSource = new MatTableDataSource(transacoes);
+      next({ items }) {
+        console.log(items);
+        that.dataSource = new MatTableDataSource(items);
+        that.dataSource.paginator = that.paginator;
       },
       error(err) {
         console.error(err);

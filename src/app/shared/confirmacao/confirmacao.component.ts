@@ -15,7 +15,7 @@ export class ConfirmacaoComponent implements OnInit {
   ngOnInit(): void {}
   confirmation() {
     console.log('confirmado');
-    return true;
+    this.dialogRef.close(true);
   }
   close() {
     this.dialogRef.close();

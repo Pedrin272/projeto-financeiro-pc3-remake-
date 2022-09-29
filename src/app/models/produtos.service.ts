@@ -12,7 +12,7 @@ const PRODUCTS = API + '/produto';
 export class ProdutosService {
   constructor(private httpClient: HttpClient) {}
   selectAll() {
-    return this.httpClient.get<Products[]>(PRODUCTS);
+    return this.httpClient.get<{ items: Products[], count: number }>(PRODUCTS);
   }
   postObj(obj: Products) {
     return this.httpClient.post<Products>(PRODUCTS, obj);
@@ -37,7 +37,7 @@ export class ProdutosService {
       return this.insert(transacao);
     }
   }
-  delete(id: string) {
-    return this.httpClient.delete<Products>(PRODUCTS + '/' + id);
+  delete(transacao: Products) {
+    return this.httpClient.delete<Products>(PRODUCTS + '/' + transacao.id );
   }
 }

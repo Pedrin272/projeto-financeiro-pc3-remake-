@@ -7,6 +7,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { ConfirmacaoComponent } from 'src/app/shared/confirmacao/confirmacao.component';
+import { Products } from '../../models/produto.service';
 
 @Component({
   selector: 'app-delete-produto',
@@ -15,23 +16,30 @@ import { ConfirmacaoComponent } from 'src/app/shared/confirmacao/confirmacao.com
 })
 export class DeleteProdutoComponent implements OnInit {
   form: FormGroup = new FormGroup({
-    id: new FormControl(0),
+    id: new FormControl(''),
   });
-  description: string;
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<DeleteProdutoComponent>,
     public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: any
-  ) {
-    this.description = data.description;
-  }
+    @Inject(MAT_DIALOG_DATA) private data: Products
+  ) {}
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      id: [''],
-    });
+    this.confirmation();
   }
+  confirmation(){
+    if (this.data && this.data.id) {
+      this.form = this.fb.group({
+        id: [this.data.id],
+      });
+    } else {
+      this.form = this.fb.group({
+        id: [''],
+      });
+    }
+  }
+
   save() {
     this.dialogRef.close(this.form.value);
   }
@@ -45,9 +53,9 @@ export class DeleteProdutoComponent implements OnInit {
     dialogConfig.height = '400px';
     dialogConfig.data = {};
     const dialogRef = this.dialog.open(ConfirmacaoComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe((data: boolean) => {
-      console.log(data);
-      if (data === true) {
+    dialogRef.afterClosed().subscribe((x: boolean) => {
+      console.log(x.valueOf());
+      if (x  === true) {
         this.save();
       } else {
         this.close();

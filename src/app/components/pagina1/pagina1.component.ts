@@ -1,19 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { count } from 'rxjs';
 import { Products } from 'src/app/models/produto.service';
 import { ProdutosService } from 'src/app/models/produtos.service';
 import { DeleteProdutoComponent } from '../delete-produto/delete-produto.component';
 import { FormProdutoComponent } from '../form-produto/form-produto.component';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 
 @Component({
   selector: 'app-pagina1',
@@ -22,8 +17,9 @@ export interface PeriodicElement {
 })
 export class Pagina1Component implements OnInit {
   produtos: Products[] = [];
-  displayedColumns: string[] = ['id', 'nome', 'valorVenda', 'estoque'];
+  displayedColumns: string[] = ['id', 'nome', 'valorVenda', 'estoque', 'acoes'];
   dataSource: any;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   form: FormGroup = new FormGroup({
     id: new FormControl(''),
@@ -36,6 +32,12 @@ export class Pagina1Component implements OnInit {
     private productsService: ProdutosService,
     public dialog: MatDialog
   ) {}
+  callDrawer(){
+    return '1';
+  }
+  openSideNav(){
+    return  { 'margin-left': '250px', 'transition': '0.5s' , 'width': '100%'};
+  }
 
   ngOnInit() {
     this.buscaProdutos();
@@ -49,9 +51,26 @@ export class Pagina1Component implements OnInit {
     const dialogRef = this.dialog.open(FormProdutoComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((data) => {
-      this.productsService.isertOrUpdate(data).subscribe((v) => {this.buscaProdutos();});
+      this.productsService.isertOrUpdate(data).subscribe((v) => {
+        this.buscaProdutos();
+      });
     });
   }
+  onEdit(element: Partial<Products>) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '800px';
+    dialogConfig.height = '400px';
+    dialogConfig.data = element;
+
+    const dialogRef = this.dialog.open(FormProdutoComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((data) => {
+      this.productsService.isertOrUpdate(data).subscribe((v) => {
+        this.buscaProdutos();
+      });
+    });
+  }
+
   onDelete() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '400px';
@@ -59,15 +78,33 @@ export class Pagina1Component implements OnInit {
     dialogConfig.data = {};
     const dialogRef = this.dialog.open(DeleteProdutoComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((data) => {
-      if(data && data.id){
+      if (data && data.id) {
         this.productsService.delete(data.id).subscribe((v) => {
           console.log(data);
           this.buscaProdutos();
         });
-      }else{
-        console.log("No Id");
+      } else {
+        console.log('No Id');
+        this.buscaProdutos();
       }
-
+    });
+  }
+  thisDelete(element: Partial<Products>) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '400px';
+    dialogConfig.height = '400px';
+    dialogConfig.data = element;
+    const dialogRef = this.dialog.open(DeleteProdutoComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data && data.id) {
+        this.productsService.delete(data).subscribe((v) => {
+          console.log(data);
+          this.buscaProdutos();
+        });
+      } else {
+        console.log('No Id');
+        this.buscaProdutos();
+      }
     });
   }
 
@@ -82,9 +119,11 @@ export class Pagina1Component implements OnInit {
     let that = this;
 
     this.productsService.selectAll().subscribe({
-      next(produtos) {
-        console.log(produtos);
-        that.dataSource = new MatTableDataSource(produtos);
+      next({items}) {
+        console.log(items);
+        that.dataSource = new MatTableDataSource(items);
+        that.dataSource.paginator = that.paginator;
+
       },
       error(err) {
         console.error(err);

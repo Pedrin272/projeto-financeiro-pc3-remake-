@@ -15,7 +15,7 @@ export class TransacaoService {
   ){}
 
   selectAll(){
-    return this.httpClient.get<Transacao[]>(RECURSO);
+    return this.httpClient.get<{ items: Transacao[], count: number }>(RECURSO);
   }
   selectById(id: string) {
     return this.httpClient.get<Transacao>(RECURSO + '/' + id);

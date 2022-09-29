@@ -1,5 +1,8 @@
+<mat-toolbar>
+  <span>Pagina de Transações</span>
+</mat-toolbar>
+
 <div class="div-principal p-5">
-  <p class="mb-5">Pagina de Transações</p>
 
   <div class="d-flex justify-content-evenly">
     <button
@@ -17,12 +20,11 @@
       Pagina 2
     </button>
   </div>
+  <div>
+    <p>{{valor}}</p>
+  </div>
   <div class="d-flex flex-row">
-    <button
-      type="button"
-      class="btn btn-primary flex-end"
-      (click)="onAdd()"
-    >
+    <button type="button" class="btn btn-primary flex-end" (click)="onAdd()">
       Novo!
     </button>
     <button type="button" class="btn btn-danger flex-end" (click)="onDelete()">
@@ -30,17 +32,15 @@
     </button>
   </div>
   <div [formGroup]="form">
-
-    <mat-form-field >
+    <mat-form-field>
       <mat-label>Filter</mat-label>
       <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Ex. ium"
-      #input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Ex. ium"
+        #input
       />
     </mat-form-field>
-
   </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- Id Column -->
@@ -76,6 +76,8 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
+    <!-- Paginator-->
+
     <!-- Row shown when there is no matching data. -->
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell" colspan="4">
@@ -83,4 +85,6 @@
       </td>
     </tr>
   </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"> </mat-paginator>
 </div>
