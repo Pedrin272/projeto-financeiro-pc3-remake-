@@ -10,18 +10,36 @@ const RECURSO = API + '/transacao';
   providedIn: 'root',
 })
 export class TransacaoService {
-  constructor(
-    private httpClient: HttpClient
-  ){}
+  constructor(private httpClient: HttpClient) {}
 
-  selectAll(){
-    return this.httpClient.get<{ items: Transacao[], count: number }>(RECURSO);
+  selectAll(
+    pagina: number = 0,
+    limiteDeLinhas: number = 5,
+    ordenacaoPelaColuna: string = '',
+    ordenacaoAscOuDesc: string = ''
+  ) {
+    return this.httpClient.get<{
+      content: Transacao[];
+      totalElements: number;
+      pageable: any;
+      sort: any;
+    }>(
+      RECURSO +
+        '/paginado?page=' +
+        pagina +
+        '&size=' +
+        limiteDeLinhas +
+        '&sort=' +
+        ordenacaoPelaColuna +
+        ',' +
+        ordenacaoAscOuDesc
+    );
   }
   selectById(id: string) {
     return this.httpClient.get<Transacao>(RECURSO + '/' + id);
   }
   insert(transacao: Transacao) {
-    return this.httpClient.post<Transacao>(RECURSO, transacao);
+    return this.httpClient.post<Transacao>(RECURSO + '/salvar', transacao);
   }
 
   update(transacao: Transacao) {

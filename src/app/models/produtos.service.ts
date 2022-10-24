@@ -4,15 +4,15 @@ import { environment } from 'src/environments/environment';
 import { Products } from './produto.service';
 
 const API = environment.apiUrl;
-const PRODUCTS = API + '/produto';
+const PRODUCTS = API + '/produtos';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProdutosService {
   constructor(private httpClient: HttpClient) {}
-  selectAll() {
-    return this.httpClient.get<{ items: Products[], count: number }>(PRODUCTS);
+  selectAll(pagina: number = 0, limiteDeLinhas: number = 5, ordenacaoPelaColuna: string = '', ordenacaoAscOuDesc: string = '') {
+    return this.httpClient.get<{ content: Products[], totalElements: number, pageable: any, sort: any}>(PRODUCTS+ '/paginado?page=' + pagina + '&size=' + limiteDeLinhas + '&sort=' + ordenacaoPelaColuna + ',' + ordenacaoAscOuDesc);
   }
   postObj(obj: Products) {
     return this.httpClient.post<Products>(PRODUCTS, obj);

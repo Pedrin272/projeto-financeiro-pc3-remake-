@@ -8,13 +8,22 @@
   </div>
   <mat-form-field appearance="fill" class="w-25">
     <mat-label>Username</mat-label>
-    <input class="text-white"
-    formControlName="username" matInput placeholder="Placeholder" />
+    <input
+      class="text-white"
+      formControlName="username"
+      matInput
+      placeholder="Placeholder"
+    />
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
   </mat-form-field>
   <mat-form-field appearance="fill" class="w-25">
     <mat-label>Enter your password</mat-label>
-    <input class="text-white" formControlName="password" matInput [type]="hide ? 'password' : 'text'" />
+    <input
+      class="text-white"
+      formControlName="password"
+      matInput
+      [type]="hide ? 'password' : 'text'"
+    />
     <button
       mat-icon-button
       matSuffix

@@ -1,10 +1,9 @@
-<mat-toolbar>
+<mat-toolbar class="d-flex justify-content-center">
   <span>Pagina de Transações</span>
 </mat-toolbar>
 
-<div class="div-principal p-5">
-
-  <div class="d-flex justify-content-evenly">
+<div class="div-principal navbar-light bg-dark">
+  <div class="d-flex justify-content-evenly mb-5 pt-5">
     <button
       type="button"
       class="btn btn-danger"
@@ -19,29 +18,30 @@
     >
       Pagina 2
     </button>
+    <button type="button" class="btn btn-warning" (click)="navegarPara([''])">
+      sair!
+    </button>
   </div>
   <div>
-    <p>{{valor}}</p>
+    <p>{{ valor }}</p>
   </div>
-  <div class="d-flex flex-row">
-    <button type="button" class="btn btn-primary flex-end" (click)="onAdd()">
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-danger m-3" (click)="onAdd()">
       Novo!
     </button>
-    <button type="button" class="btn btn-danger flex-end" (click)="onDelete()">
+    <button type="button" class="btn btn-primary m-3" (click)="onDelete()">
       Delete
     </button>
   </div>
-  <div [formGroup]="form">
-    <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ex. ium"
-        #input
-      />
-    </mat-form-field>
-  </div>
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. ium"
+      #input
+    />
+  </mat-form-field>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- Id Column -->
     <ng-container matColumnDef="id">

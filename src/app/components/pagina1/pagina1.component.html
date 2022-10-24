@@ -1,20 +1,15 @@
-<mat-toolbar>
-  <button #drawerCaller (click)="callDrawer()" (change)="0">
-    Drawer
-  </button>
-  <span>Pagina de Produtos</span>
+<mat-toolbar class="d-flex justify-content-center">
+  <span class="text-center">Pagina de Produtos</span>
 </mat-toolbar>
 
-
-  <mat-drawer-container  class="" [class.drawer]="drawerCaller.value == '0'" >
-    <mat-drawer mode="side" >Drawer content</mat-drawer>
-    <mat-drawer-content>Main content</mat-drawer-content>
-  </mat-drawer-container>
-
 <div class="div-principal navbar-light bg-dark">
-  <div class="d-flex justify-content-evenly mb-5">
-    <button type="button" class="btn btn-warning" (click)="navegarPara([''])">
-      Pagina Principal
+  <div class="d-flex justify-content-evenly mb-5 pt-5">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="navegarPara(['pagina1'])"
+    >
+      Pagina 1
     </button>
     <button
       type="button"
@@ -23,12 +18,15 @@
     >
       Pagina 2
     </button>
+    <button type="button" class="btn btn-warning" (click)="navegarPara([''])">
+      sair!
+    </button>
   </div>
-  <div class="d-flex flex-row">
-    <button type="button" class="btn btn-primary flex-end" (click)="onAdd()">
+  <div class="d-flex justify-content-end align-content-between">
+    <button type="button" class="btn btn-danger m-3" (click)="onAdd()">
       Novo!
     </button>
-    <button type="button" class="btn btn-danger flex-end" (click)="onDelete()">
+    <button type="button" class="btn btn-primary m-3" (click)="onDelete()">
       Delete
     </button>
   </div>

@@ -2,9 +2,10 @@ import { User } from './user-model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 const API = environment.apiUrl;
-const RECURSO = API + '/usuarios';
+const RECURSO = API + '/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -13,13 +14,20 @@ export class UserService {
   constructor(private httpClient: HttpClient) {}
 
   selectAll() {
-    return this.httpClient.get<{ items: User[]; count: number }>(RECURSO);
+    return this.httpClient.get<{ items: User[]; count: number }>(
+      RECURSO + '/listar'
+    );
   }
   selectById(id: string) {
     return this.httpClient.get<User>(RECURSO + '/' + id);
   }
-  validUser(user: User) {
-    return this.httpClient.post<User>(RECURSO , user.name + user.password)  ;
+  validUser(username: string, password: string) {
+    console.log(username + ' ' + password);
+    console.log('validando usuario');
+
+    return this.httpClient
+      .get<User>(RECURSO + `/${username}&&${password}`)
+      .subscribe();
   }
   insert(user: User) {
     return this.httpClient.post<User>(RECURSO, user);

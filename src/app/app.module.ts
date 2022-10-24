@@ -22,17 +22,18 @@ import { DeleteProdutoComponent } from './components/delete-produto/delete-produ
 import { DeleteTransacaoComponent } from './components/delete-transacao/delete-transacao.component';
 import { FormProdutoComponent } from './components/form-produto/form-produto.component';
 import { FormTransacaoComponent } from './components/form-transacao/form-transacao.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
 import { PaginaPrincipalComponent } from './components/pagina-principal/pagina-principal.component';
 import { Pagina1Component } from './components/pagina1/pagina1.component';
-import { Pagina2Component } from './components/pagina2/pagina2.component';
 import { ConfirmacaoComponent } from './shared/confirmacao/confirmacao.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginFormComponent,
     PaginaPrincipalComponent,
     Pagina1Component,
-    Pagina2Component,
+
     FormProdutoComponent,
     DeleteProdutoComponent,
     DeleteTransacaoComponent,
@@ -51,6 +52,7 @@ import { ConfirmacaoComponent } from './shared/confirmacao/confirmacao.component
     MatCardModule,
     MatInputModule,
     MatDialogModule,
+
     AppRoutingModule,
     FormsModule,
     MatFormFieldModule,
