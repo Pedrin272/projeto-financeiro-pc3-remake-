@@ -1,0 +1,35 @@
+<div
+  class="d-flex flex-column justify-content-center align-items-center container-fluid"
+  style="height: 100vh; background-color: rgb(40, 37, 34)"
+  [formGroup]="form"
+>
+  <div class="mb-5">
+    <mat-icon color="warn" class="mat-icon icon-display">fingerprint</mat-icon>
+  </div>
+  <mat-form-field appearance="fill" class="w-25">
+    <mat-label>Username</mat-label>
+    <input class="text-white"
+    formControlName="username" matInput placeholder="Placeholder" />
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="w-25">
+    <mat-label>Enter your password</mat-label>
+    <input class="text-white" formControlName="password" matInput [type]="hide ? 'password' : 'text'" />
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide"
+    >
+      <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+    </button>
+  </mat-form-field>
+  <button
+    (click)="onSubmit()"
+    type="submit"
+    class="btn btn-dark px-5 py-3 d-flex break"
+  >
+    ENVIAR
+  </button>
+</div>
